@@ -10,28 +10,26 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        language: [ 'csharp' ]
-
     steps:
     - uses: actions/checkout@v3
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: 'csharp'
+        queries: security-and-quality
 
-    - name: Build
-      run: dotnet build --configuration Release
+    - name: Restore and Build
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
+      with:
+        wait-for-processing: true

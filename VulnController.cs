@@ -16,6 +16,15 @@ public class VulnController : ControllerBase
     [HttpGet("file")]
     public IActionResult ReadFile(string name)
     {
+        if (string.IsNullOrWhiteSpace(name) ||
+            name.Contains("..", StringComparison.Ordinal) ||
+            name.Contains(Path.DirectorySeparatorChar) ||
+            name.Contains(Path.AltDirectorySeparatorChar) ||
+            name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+        {
+            return BadRequest();
+        }
+
         var fileName = Path.GetFileName(name);
         var fullPath = Path.GetFullPath(Path.Combine(DataDir, fileName));
         if (!fullPath.StartsWith(DataDir + Path.DirectorySeparatorChar, StringComparison.Ordinal))

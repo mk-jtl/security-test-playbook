@@ -27,6 +27,7 @@ jobs:
         with:
           languages: csharp
           build-mode: manual
+          queries: security-extended
 
       - name: Build
         run: |

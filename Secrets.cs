@@ -2,5 +2,5 @@ namespace SecurityDemo;
 
 public class Secrets
 {
-    private const string StripeKey = "sk_live_a93960681359b884c6c93668";
+    private const string StripeKey = "sk_live_c9a8a35afbb4423418eb0aa3";
 }
